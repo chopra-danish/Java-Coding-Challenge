@@ -1,4 +1,4 @@
-package util;
+/*package util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +13,7 @@ public class DBConnUtil {
         try {
             // Load database properties from file
             Properties properties = new Properties();
-            properties.load(DBConnUtil.class.getClassLoader().getResourceAsStream("db.properties"));
+            properties.load(DBUtil.class.getClassLoader().getResourceAsStream("db.properties"));
 
             // Retrieve properties (update with your database details)
             String url = properties.getProperty("db.url");
@@ -26,6 +26,29 @@ public class DBConnUtil {
         } catch (Exception e) {
             System.out.println("Error while establishing database connection: " + e.getMessage());
             throw new SQLException("Failed to establish database connection.");
+        }
+        return conn;
+    }
+}
+*/
+package util;
+
+import java.sql.*;
+
+public class DBConnUtil {
+	private static Connection conn;
+    public static Connection getConnection(String filename) {
+        if (conn == null) 
+        {
+            try 
+            {
+                String cs = DBPropertyUtil.getConnectionString(filename);
+                conn = DriverManager.getConnection(cs);
+            } 
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+            }
         }
         return conn;
     }

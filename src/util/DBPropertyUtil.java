@@ -31,7 +31,7 @@ public class DBPropertyUtil {
     }
 }
 */
-package util;
+/*package util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -58,5 +58,30 @@ public class DBPropertyUtil {
 
         // Return the full connection string (JDBC format)
         return "jdbc:mysql://" + url + "?user=" + username + "&password=" + password;
+    }
+}
+*/
+package util;
+
+import java.io.*;
+import java.util.*;
+
+public class DBPropertyUtil {
+
+	public static String getConnectionString(String fileName) {
+        Properties pr = new Properties();
+        try (FileInputStream f = new FileInputStream(fileName)) 
+        {
+            pr.load(f);
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+        String url = pr.getProperty("db.url");
+        String username = pr.getProperty("db.username");
+        String password = pr.getProperty("db.password");
+
+        return url + "?user=" + username + "&password=" + password;
     }
 }
